@@ -1,3 +1,4 @@
+#Copyright 2017, Yuzhuang Chen
 import json
 
 # store the result from CNN
