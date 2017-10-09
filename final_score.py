@@ -86,7 +86,7 @@ def find_best_match(score, array):
 
 if __name__ == '__main__':
 	# read the cnn output json
-	with open('cnn_input_score.json', 'r') as f:
+	with open('cnn_test.json', 'r') as f:
 		cnn_score = json.load(f)
 		myitems = cnn_score.items()
 		cnn_input_score = list(myitems)
