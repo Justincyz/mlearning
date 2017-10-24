@@ -1,27 +1,8 @@
 #Copyright 2017, Yuzhuang Chen
 import json
-
+import math
+#The tweet score which closest to target score is: 0.0882355861847 Justin know relaxing Kauai at Martin Luther King, Jr. Da. Moreover, Justin hear dirge is talking about exciting Utopia at Martin Luther King, Jr. Day
 # store the result from CNN
-cnn_input_score = []
-
-# store the user_liwc.json file
-user_liwc = []
-# has_user_liwc is to store the liwc score which is not zero from user_liwc 
-has_user_liwc =[]
-
-# store the get_score.json, the json data from get_score.py
-get_score = []
-# has_user_liwc is to store the get score which is not zero from user_liwc 
-has_get_score = []
-
-# This array is to store the top 3 best matched scores
-best_matched = []
-
-# Here is for getting the postive emotion and negative emotion
- 	#pos_score.append(target_score['pos']['happiness'])
- 	#pos_score.append(target_score['pos']['cheerful'])
- 	#neg_score.append(target_score['neg']['depression'])
- 	#neg_score.append(target_score['neg']['stressed'])
 
 def get_total_weight(has_user_liwc):
 	total_weight = 0
@@ -66,25 +47,107 @@ def calculate_tweet_score(array1, array2):
 					continue	
 		array2[index].append(score)
 
-		
-			
+
 
 # find_best_match(desired_score, get_score)
-def find_best_match(score, array):
+def target_error(score, array):
 	matched_tweet = []
 	for index in range(0, len(array)):
-		matched_tweet.append([((array[index][-1] - score)*(array[index][-1] - score)),array[index][24][1]])
+		matched_tweet.append([(array[index][-1] - score),array[index][24][1]])
 		
+# matched_tweet[0] is the best matched tweet	
 	matched_tweet.sort()
-	print ('The best matched tweet is: {}, the score is: {}'.format(matched_tweet[0][1], matched_tweet[0][0])) 
+	return matched_tweet
+
+
+def find_best_pair(library1, library2):
+	negative_library1 = []
+	positive_library1 = []
+	negative_library2 = []
+	positive_library2 = []
+	shortest_library = []
+	combined_library = []
+
+	for index in range(0, len(library1)):
+		if(library1[index][0] < 0):
+			negative_library1.append([library1[index][0], library1[index][1]])
+		else:	
+			positive_library1.append([library1[index][0], library1[index][1]])
+
+	for index in range(0, len(library2)):
+		if(library2[index][0] < 0):
+			negative_library2.append([library2[index][0], library2[index][1]])
+		else:	
+			positive_library2.append([library2[index][0], library2[index][1]])		
+
+	shortest_library.append(len(negative_library1))
+	shortest_library.append(len(positive_library1))
+	shortest_library.append(len(negative_library2))
+	shortest_library.append(len(positive_library2))
+	shortest_library.sort()
+
+	negative_library1.sort()
+	positive_library1.sort()
+	negative_library2.sort()
+	positive_library2.sort()
 	
-	print ('The second best matched tweet is: {}, the score is: {}'.format(matched_tweet[1][1], matched_tweet[1][0])) 
-	
-	print ('The third best matched tweet is: {}, the score is: {}'.format(matched_tweet[2][1], matched_tweet[2][0])) 
+
+	for index in range (0, shortest_library[0]):
+		score = negative_library1[len(negative_library1) - 1- index][0]
+		for index1 in range(0, shortest_library[0]):
+			score1 = (score + positive_library2[index1][0])/2
+			combined_library.append([score1, negative_library1[len(negative_library1) - 1- index][1], positive_library2[index1][1]])
+
+	for index in range (0, shortest_library[0]):
+		score = negative_library2[len(negative_library2) - 1 -index][0]
+		for index1 in range(0, shortest_library[0]):
+			score1 = (score + positive_library1[index1][0])/2
+			combined_library.append([score1, negative_library2[len(negative_library2) - 1 -index][1], positive_library1[index1][1]])		
+
+	combined_library.sort()
+	#print combined_library
+	find_best_pair_helper(combined_library)		
+
+		
+def find_best_pair_helper(matched_tweet):
+	best_matched = matched_tweet[0][0]
+	best_matched1 = None
+	tweet1 = ''
+	tweet2 = ''
+
+	for index in range (0,len(matched_tweet)):
+		if abs(matched_tweet[index][0]) < abs(best_matched):
+			best_matched = abs(matched_tweet[index][0])
+			best_matched1 = matched_tweet[index][0]
+			tweet1 = matched_tweet[index][1]
+			tweet2 = matched_tweet[index][2]
+			
+		else:
+			continue			
+
+
+	print best_matched
+	print tweet1
+	print tweet2
 
 
 
 if __name__ == '__main__':
+	cnn_input_score = []
+
+# store the user_liwc.json file
+	user_liwc = []
+# has_user_liwc is to store the liwc score which is not zero from user_liwc 
+	has_user_liwc = []
+
+# store the get_score.json, the json data from get_score.py
+	get_score = []
+	get_score1 = []
+
+# Two libraries after we associate a distance score for each tweet 
+	library1 = []
+	library2 = [] 
+
 	# read the cnn output json
 	with open('cnn_test.json', 'r') as f:
 		cnn_score = json.load(f)
@@ -106,19 +169,32 @@ if __name__ == '__main__':
 
 
 	# read the tweet liwc score
-	with open('get_score.json', 'r') as fp:
-		
+	with open('library1.json', 'r') as fp:
 		tweet_score = json.load(fp)		
 		for x in range(0, len(tweet_score)):
 			myitems = tweet_score[x].items()
 			get_score.append(myitems)
-			
+	
+	with open('library2.json', 'r') as fp:
+		tweet_score = json.load(fp)		
+		for x in range(0, len(tweet_score)):
+			myitems = tweet_score[x].items()
+			get_score1.append(myitems)
+
+
 		
 	store_weight_ratio(has_user_liwc)	
 
 	desired_score = calculate_cnn_score(has_user_liwc, cnn_input_score)
 	calculate_tweet_score(has_user_liwc, get_score)
-	find_best_match(desired_score, get_score) 
+	library1 = target_error(desired_score, get_score) 
+
+	calculate_tweet_score(has_user_liwc, get_score1)
+	library2 = target_error(desired_score, get_score1)
+
+	find_best_pair(library1, library2)
+
+
 
 	
 	
