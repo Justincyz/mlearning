@@ -92,8 +92,8 @@ def find_best_pair(library1, library2):
 	negative_library2.sort()
 	positive_library2.sort()
 
-#	if either negative_library1 or positive_library2 is zero, then the program donnot need to check both of them.
-	if(len(positive_library2) ==0 or len(negative_library1) == 0):
+#	if either negative_library1 or positive_library2 is null, then the program should only check about positive_library 1 and negative library2.
+	if(len(positive_library2) == 0 or len(negative_library1) == 0):
 		length = 0
 		if (len(positive_library1) > len(negative_library2)):
 			length = len(negative_library2)
@@ -103,9 +103,10 @@ def find_best_pair(library1, library2):
 			score = negative_library2[len(negative_library2) - 1- index][0]
 			for index1 in range(0, length):
 				score1 = (score + positive_library1[index1][0])/2
-				combined_library.append([score1, negative_library2[len(negative_library2) - 1- index][1], positive_library1[index1][1]])
-		
-	elif(len(negative_library2) == 0 or len(positive_library) ==0):
+				combined_library.append([score1, positive_library1[index1][1], negative_library2[len(negative_library2) - 1- index][1]])
+
+#	if either negative_library2 or positive_library1 is null, then the program should only check about positive_library2 and negative library1.	
+	elif(len(positive_library1) == 0 or len(negative_library2) == 0):
 		length = 0
 		if (len(positive_library2) > len(negative_library1)):
 			length = len(negative_library1)
@@ -117,6 +118,19 @@ def find_best_pair(library1, library2):
 				score1 = (score + positive_library2[index1][0])/2
 				combined_library.append([score1, negative_library1[len(negative_library1) - 1- index][1], positive_library2[index1][1]])	
 
+
+#  if both negative libraries are null, program will only pick the smallest absolute value from both positive libraries
+	elif(len(positive_library1) == 0 and len(positive_library2) == 0 ):
+		score = (negative_library2[len(negative_library2)-1][0] + negative_library1[len(negative_library1)-1][0])/2
+		combined_library.append([score, negative_library1[len(negative_library1) - 1][1], negative_library2[len(negative_library2)-1][1]])
+
+
+#  if both negative libraries are null, program will only pick the smallest absolute value from both positive libraries
+	elif(len(negative_library1) == 0 and len(negative_library2) == 0 ):
+		score = (positive_library1[0][0] + positive_library2[0][0])/2
+		combined_library.append([score, positive_library1[0][1], positive_library2[0][1]])
+
+#  if all the libraries are not empty, then the program need to select the best fit one 
 	else:
 		for index in range (0, shortest_library[0]):
 			score = negative_library1[len(negative_library1) - 1- index][0]
@@ -128,7 +142,7 @@ def find_best_pair(library1, library2):
 			score = negative_library2[len(negative_library2) - 1 -index][0]
 			for index1 in range(0, shortest_library[0]):
 				score1 = (score + positive_library1[index1][0])/2
-				combined_library.append([score1, negative_library2[len(negative_library2) - 1 -index][1], positive_library1[index1][1]])				
+				combined_library.append([score1, positive_library1[index1][1], negative_library2[len(negative_library2) - 1 -index][1]])				
 	
 
 	combined_library.sort()
