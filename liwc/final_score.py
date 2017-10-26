@@ -92,6 +92,8 @@ def find_best_pair(library1, library2):
 	negative_library2.sort()
 	positive_library2.sort()
 
+	
+
 #	if either negative_library1 or positive_library2 is null, then the program should only check about positive_library 1 and negative library2.
 	if(len(positive_library2) == 0 or len(negative_library1) == 0):
 		length = 0
@@ -139,6 +141,8 @@ def find_best_pair(library1, library2):
 		else:
 			score = (positive_library1[0][0] + positive_library2[0][0])/2
 			combined_library.append([score, positive_library1[0][1], positive_library2[0][1]])
+
+		
 
 #  if all the libraries are not empty, then the program need to select the best fit one 
 	else:
