@@ -160,7 +160,7 @@ def find_best_pair(library1, library2):
 	
 
 	combined_library.sort()
-	print combined_library
+	
 	find_best_pair_helper(combined_library)		
 
 		
@@ -179,9 +179,8 @@ def find_best_pair_helper(matched_tweet):
 			continue			
 
 
-	print best_matched
-	print tweet1
-	print tweet2
+	print ("The difference is {}.\n {}. Moreover, {}".format(best_matched, tweet1[: -2], tweet2))
+	
 
 
 
