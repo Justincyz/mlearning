@@ -18,7 +18,7 @@ $(document).ready(function() {
             function checkTheExistedTweet(tweet, s) {
                 if (tweet.indexOf(s) === -1) {
                     //restrict the length of tweet
-                    if(s.length <= 140){
+                    if(s.length <= 140 ){
                         tweet.push(s);
                   }
                 } else if (tweet.indexOf(s) > -1) {}
@@ -47,7 +47,7 @@ $(document).ready(function() {
 
     //Here is for setting the original database
     setTimeout(function() {
-        loadGrammar("tweetbot");
+        loadGrammar("library1");
     },
     10);
 
