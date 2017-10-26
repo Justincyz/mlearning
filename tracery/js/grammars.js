@@ -1,27 +1,28 @@
-/**
- * @author Kate
- */
 
 var grammars = {
 
-    tweetbot:{
-        origin : ["I #sense#","Justin #sense#", "Jack #sense#"],
+    library1:{ 
+        origin : ["I am #sense#", "He looks very #adverb1#"],
 
-        sense : ["feel #emotion#", "wrote #song#", "hear #song#", "see #area#", "know #area#", "drink #drink#", "went to #area#"],
+        sense : ["feeling #adverb# #emotion#" ],
 
-        drink : ["cup of chamomile tea", "glass of milk", "shot of vodka", "dry martini", "fuzzy navel", "appletini", "double shot of gin", "Campari", "glass of champagne", "bottle of Domaine Leroy Musigny Grand Cru"],
+        emotion : "fear tired love trust gladness heartache desire forgiveness grace joy pride sorrow regret confusion glee happiness contentment terror anger rage jealousy".split(" "),
 
-        said : ["purred #feeling#", "whispered #feeling#", "said #feeling#", "murmurred #feeling#", "growled #feeling#"],
+        feeling : ["'I love you' and I #sense#", "'I hate you'", "'I wanna marry you'"],
 
-        feeling : ["'I love you'", "'I hate you'", "'I wanna marry you'"],
+        adverb :["fairly", "pretty","quite","very","much","too","greatly","really","deeply","not really","totally","totally not","less","too","hardly"],
 
-        drink : ["cup of chamomile tea", "glass of milk", "shot of vodka", "dry martini", "fuzzy navel", "appletini", "double shot of gin", "Campari", "glass of champagne", "bottle of Domaine Leroy Musigny Grand Cru"],
+        adverb1 : ["beautiful","relaxing","tiring","dangerous","peaceful","fascinating","boring","thrilling","exciting","marvelous"],
+    },
 
-        song : ["melody", "dirge", "ballad", "poem", "beat poetry", "slam poetry", "spoken word performance", "hymn", "song", "tone poem", "symphony"],
-        
-        area : ["Brazil", "Kauai", "Cape Verde", "Shanghai", "Barsoom", "Utopia", "Anchorage", "Europa", "Discworld", "world", "Miami", "Santa Cruz"],
-        
-        emotion : ["sorrow", "gladness", "joy", "heartache", "love", "forgiveness", "grace"],
+    library2:{
+        origin : ["I #verb#"],
+
+        verb : ["want to #action#","eager to #action#","hope to #action#","drink a #drink#","never want to #action#","reject to #action#","am not willing to #action#",],
+
+        drink : ["cup of  tea", "glass of milk", "shot of vodka", "dry martini", "fuzzy navel", "appletini and #verb#" , "double shot of gin", "Campari", "glass of champagne"],
+
+        action:["relax myself","enjoy the sunlight","go to the beach","read a book","sleep all day long","hold a party", "see my cat"]
     },
     
     neverbar : {
