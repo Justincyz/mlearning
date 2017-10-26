@@ -119,16 +119,26 @@ def find_best_pair(library1, library2):
 				combined_library.append([score1, negative_library1[len(negative_library1) - 1- index][1], positive_library2[index1][1]])	
 
 
-#  if both negative libraries are null, program will only pick the smallest absolute value from both positive libraries
+#  if both negative libraries are null, program will only pick the smallest absolute value from both positive libraries. And then it will check the  third library whether is null ot not
 	elif(len(positive_library1) == 0 and len(positive_library2) == 0 ):
-		score = (negative_library2[len(negative_library2)-1][0] + negative_library1[len(negative_library1)-1][0])/2
-		combined_library.append([score, negative_library1[len(negative_library1) - 1][1], negative_library2[len(negative_library2)-1][1]])
+		if(len(negative_library1) == 0):
+			combined_library.append([negative_library2[len(negative_library2)-1][0], negative_library2[len(negative_library2)-1][1], ''])
+		elif(len(negative_library2) == 0):
+			combined_library.append([negative_library1[len(negative_library1)-1][0], negative_library1[len(negative_library1)-1][1], ''])
+		else:
+			score = (negative_library2[len(negative_library2)-1][0] + negative_library1[len(negative_library1)-1][0])/2
+			combined_library.append([score, negative_library1[len(negative_library1) - 1][1], negative_library2[len(negative_library2)-1][1]])
 
 
-#  if both negative libraries are null, program will only pick the smallest absolute value from both positive libraries
+#  if both negative libraries are null, program will only pick the smallest absolute value from both positive libraries. And then it will check the  third library whether is null or not
 	elif(len(negative_library1) == 0 and len(negative_library2) == 0 ):
-		score = (positive_library1[0][0] + positive_library2[0][0])/2
-		combined_library.append([score, positive_library1[0][1], positive_library2[0][1]])
+		if(len(positive_library1) == 0):
+			combined_library.append([positive_library2[0][0], positive_library2[0][1], ''])
+		elif(len(positive_library2) == 0):
+			combined_library.append([positive_library1[0][0], positive_library1[0][1], ''])
+		else:
+			score = (positive_library1[0][0] + positive_library2[0][0])/2
+			combined_library.append([score, positive_library1[0][1], positive_library2[0][1]])
 
 #  if all the libraries are not empty, then the program need to select the best fit one 
 	else:
