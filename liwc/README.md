@@ -1,5 +1,5 @@
 # touch-to-tweet
-It is very easy to run this program. This program was written on python and all you need to do is to run the get_score.py firstly and run final_score secondly.  Those two python files are written on Python 2.7 not 3.5
+It is very easy to run this program. This program was written on python and all you need to do is to run the get_score.py firstly and run final_score secondly.  Those two python files are written on Python 2.7 not 3.5. Details have been included in each file.
 
 1. You need to registe a LIWC account from LIWC website.
 2. Copy and paste the key and secret key from LIWC and paste both of them on get_score.py
